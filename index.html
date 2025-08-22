@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ListaGOD</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!--
+    montaje de la app
+    uso del todo input y del todo list
+  -->
+  <div id="app" class="container">
+    <div class="card">
+      <header>
+        <div>
+          <h1>Lista de tareas</h1>
+          <div class="sub">Organizador de tareas</div>
+        </div>
+        <div class="sub">Tareas: <strong>{{ tareas.length }}</strong></div>
+      </header>
+
+      <!-- componente para entrada -->
+      <entrada-tarea @agregar-tarea="agregarTarea"></entrada-tarea>
+
+      <!-- filtros y el contador -->
+      <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap">
+        <div class="filters">
+          <button class="btn ghost" :class="{active:filtro==='all'}" @click="filtro='all'">Todas</button>
+          <button class="btn ghost" :class="{active:filtro==='active'}" @click="filtro='active'">Activas</button>
+          <button class="btn ghost" :class="{active:filtro==='completed'}" @click="filtro='completed'">Completadas</button>
+        </div>
+        <div class="sub">Completadas: {{ contadorCompletadas }} </div>
+      </div>
+
+      <!-- Lista de tareas -->
+
+      <lista-tareas :elementos="tareasFiltradas" @alternar="alternarTarea" @eliminar="eliminarTarea"></lista-tareas>
+
+      <footer>
+        <div class="sub">Cambios guardados localmente</div>
+        <div style="display:flex;gap:8px">
+          <button class="btn ghost" @click="borrarCompletadas">Borrar completadas</button>
+          <button class="btn" @click="limpiarTodas">Limpiar todo</button>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Cargar el Vue 3 de CDN -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <script src="vue.js"></script>
+</body>
+</html>
